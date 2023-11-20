@@ -14,9 +14,55 @@ import { a } from '@react-spring/three';
 
 import islandScene from '../assets/3d/island.glb';
 
-const Island = (props) => {
+const Island = ({ isRotating, setIsRotating, ...props }) => {
   const islandRef = useRef();
+
+  const { gl, viewport } = useThree();
   const { nodes, materials } = useGLTF(islandScene);
+
+  const lastx = useRef(0);
+  const rotationSpeed = useRef(0);
+  const dampingFactor = 0.95;
+
+  const handlePointerDown = (e) => {
+    e.stopPropagation();
+    e.preventDefault();
+    setIsRotating(true);
+
+    const clientX = e.touches 
+     ? e.touches[0].clientX 
+     : e.clientX;
+
+     lastX.current = clientX;
+  }
+
+  const handlePointerUp = (e) => {
+  e.stopPropagation(); // Prevents the event from propagating up the DOM hierarchy
+  e.preventDefault(); // Prevents the default action associated with the event
+  setIsRotating(false); // Sets the state variable isRotating to false
+
+  const clientX = e.touches 
+    ? e.touches[0].clientX // Retrieves the X-coordinate of the pointer, accounting for touch events
+    : e.clientX;
+
+  const delta = (clientX - lastX.current) / viewport.width; // Calculates the change in X-coordinate since the last pointer event
+
+  islandRef.current.rotation.y += delta * 0.01 * Math.PI; // Updates the rotation of the island based on the calculated delta
+  lastX.current = clientX; // Updates the lastX.current to the current X-coordinate for the next event
+  rotationSpeed.current = delta * 0.01 * Math.PI; // Updates the rotationSpeed.current based on the calculated delta
+  }
+
+  const handlePointerMove = (e) => {
+    e.stopPropagation();
+    e.preventDefault();
+
+    if(isRotating) handlePointerUp(e);
+  }
+
+  useEffect(() => {
+
+  }, [])
+
   return (
     <a.group ref={islandRef} {...props}>
       <mesh
