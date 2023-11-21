@@ -1,26 +1,47 @@
 import React, { useRef, useState } from 'react'
 import emailjs from '@emailjs/browser';
+// IMPORTS --------------------------------------------------------------------------------------------
 
 const Contact = () => {
   const formRef = useRef(null);
   const [form, setForm] = useState({ name: '', email: '', message: '' })
   const [isLoading, setIsLoading] = useState(false);
 
-  // update state of a form dynamically as the user types into input fields
+  // HANDLECHANGE -------------------------------------------------------------------------------------
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value })
   };
-
+  // HANDLESUBMIT -------------------------------------------------------------------------------------
   const handleSubmit = (e) => {
     e.preventDefault(); // prevent page reload
     setIsLoading(true);
 
-    emailjs.sendForm()
+    console.log(import.meta.env.VITE_APP_EMAILJS_SERVICE_ID)
+    emailjs.send(
+      import.meta.env.VITE_APP_EMAILJS_SERVICE_ID,
+      import.meta.env.VITE_APP_EMAILJS_TEMPLATE_ID,
+      {
+        from_name: form.name,
+        to_name: "Rene",
+        from_email: form.email,
+        to_email: 'rene.pungartnik98@gmail.com',
+        message: form.message
+      },
+      import.meta.env.VITE_APP_EMAILJS_PUBLIC_KEY
+    ).then(() => {
+      setIsLoading(false);
+
+      setForm({ name: '', email: '', message: '' });
+    }).catch((error) => {
+      setIsLoading(false);
+      console.log(error);
+    })
   };
-
+  // HANDLEFOCUS --------------------------------------------------------------------------------------
   const handleFocus = () => {};
+  // HANDLEBLUR ---------------------------------------------------------------------------------------
   const handleBlur = () => {};
-
+  // RETURN -------------------------------------------------------------------------------------------
   return (
     <section className="relative flex lg:flex-row flex-col max-container bg-gradient-to-r from-rose-100 to-teal-100">
       <div className="flex-1 min-w-[50%] flex flex-col">
