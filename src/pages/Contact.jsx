@@ -59,7 +59,7 @@ const Contact = () => {
             />
           </label>
           <button 
-          className="text-white bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500 rounded-md font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
+          className="text-white bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500 rounded-md font-medium text-sm w-full sm:w-auto px-5 py-2.5 text-center"
           type="submit"
           onFocus={handleFocus}
           onBlur={handleBlur}
