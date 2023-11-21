@@ -17,13 +17,13 @@ const Contact = () => {
         className="w-full flex flex-col gap-7 mt-14"
         >
           <label className="text-black-500 font-semibold">
-            Your name
+            Your full name
             <input
             type="text"
             name="name"
             className="input"
             required
-            placeholder="Rene"
+            placeholder="Rene Pungartnik"
             value={form.name}
             onChange={handleChange}
             onFocus={handleFocus}
@@ -59,12 +59,13 @@ const Contact = () => {
             />
           </label>
           <button 
-          className="bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500 rounded-md"
+          className="text-white bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500 rounded-md font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
           type="submit"
           onFocus={handleFocus}
           onBlur={handleBlur}
+          disabled={isLoading}
           >
-            Send
+            {isLoading ? 'Sending...' : 'Send Message'}
           </button>
         </form>
       </div>
