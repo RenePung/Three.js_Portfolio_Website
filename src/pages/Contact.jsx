@@ -1,12 +1,26 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
+import emailjs from '@emailjs/browser';
 
 const Contact = () => {
+  const formRef = useRef(null);
   const [form, setForm] = useState({ name: '', email: '', message: '' })
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleChange = () => {};
-  const handleFocus = () => {};
+  // update state of a form dynamically as the user types into input fields
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value })
+  };
+
+  const handleFocus = (e) => {
+    e.preventDefault(); // prevent page reload
+    setIsLoading(true);
+
+    emailjs.sendForm()
+  };
+
   const handleBlur = () => {};
+  
+  const handleSubmit = () => {};
 
   return (
     <section className="relative flex lg:flex-row flex-col max-container bg-gradient-to-r from-rose-100 to-teal-100">
@@ -15,6 +29,7 @@ const Contact = () => {
 
         <form
         className="w-full flex flex-col gap-7 mt-14"
+        onSubmit={handleSubmit}
         >
           <label className="text-black-500 font-semibold">
             Your full name
@@ -37,7 +52,7 @@ const Contact = () => {
             name="email"
             className="input"
             required
-            placeholder="rene.pungartnik123@gmail.com"
+            placeholder="rene.pungartnik@gmail.com"
             value={form.email}
             onChange={handleChange}
             onFocus={handleFocus}
