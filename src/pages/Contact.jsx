@@ -11,16 +11,15 @@ const Contact = () => {
     setForm({ ...form, [e.target.name]: e.target.value })
   };
 
-  const handleFocus = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault(); // prevent page reload
     setIsLoading(true);
 
     emailjs.sendForm()
   };
 
+  const handleFocus = () => {};
   const handleBlur = () => {};
-  
-  const handleSubmit = () => {};
 
   return (
     <section className="relative flex lg:flex-row flex-col max-container bg-gradient-to-r from-rose-100 to-teal-100">
