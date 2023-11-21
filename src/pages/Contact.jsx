@@ -1,8 +1,74 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 const Contact = () => {
+  const [form, setForm] = useState({ name: '', email: '', message: '' })
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleChange = () => {};
+  const handleFocus = () => {};
+  const handleBlur = () => {};
+
   return (
-    <div>Contact</div>
+    <section className="relative flex lg:flex-row flex-col max-container bg-gradient-to-r from-rose-100 to-teal-100">
+      <div className="flex-1 min-w-[50%] flex flex-col">
+        <h1 className="head-text">Get in touch 💬</h1>
+
+        <form
+        className="w-full flex flex-col gap-7 mt-14"
+        >
+          <label className="text-black-500 font-semibold">
+            Your name
+            <input
+            type="text"
+            name="name"
+            className="input"
+            required
+            placeholder="Rene"
+            value={form.name}
+            onChange={handleChange}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
+            />
+          </label>
+          <label className="text-black-500 font-semibold">
+            Your email
+            <input
+            type="email"
+            name="email"
+            className="input"
+            required
+            placeholder="rene.pungartnik123@gmail.com"
+            value={form.email}
+            onChange={handleChange}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
+            />
+          </label>
+          <label className="text-black-500 font-semibold">
+            Your message
+            <textarea
+            name="message"
+            className="textarea"
+            rows={6}
+            required
+            placeholder="Write your message here!"
+            value={form.message}
+            onChange={handleChange}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
+            />
+          </label>
+          <button 
+          className="bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500 rounded-md"
+          type="submit"
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+          >
+            Send
+          </button>
+        </form>
+      </div>
+    </section>
   )
 }
 
