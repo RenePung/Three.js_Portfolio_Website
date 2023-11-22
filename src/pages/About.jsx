@@ -1,8 +1,34 @@
-import React from 'react'
+import React from 'react';
+import { skills } from '../constants';
 
 const About = () => {
   return (
-    <div>About</div>
+    <section className="max-container bg-gradient-to-r from-rose-100 to-teal-100">
+      <h1 className="head-text">
+        Hello, i am <span className="blue-gradient_text font-semibold drop-shadow">Rene</span>
+      </h1>
+      <div className="mt-5 flex flex-col gap-3 text-slate-500">
+        <p className="font-semibold">An <span className="font-bold blue-gradient_text">Aspiring Full Stack Developer</span> From Slovenia</p>
+      </div>
+      <div className="py-10 flex flex-col">
+        <h3 className="subhead-text">Skills i acquired during my self taught journey</h3>
+
+        <div className="mt-16 flex flex-wrap gap-12">
+          {skills.map((skill) => (
+            <div className="block-container w-20 h-20">
+              <div className="btn-black rounded-xl"/> 
+              <div className="btn-front rounded-xl flex justify-center items-center border shadow-xl hover:border-sky-500">
+                <img 
+                src={skill.imageUrl}
+                alt={skill.name}
+                className="w-1/2 h-1/2 object-contain"
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
   )
 }
 
