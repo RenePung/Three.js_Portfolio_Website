@@ -36,7 +36,11 @@ const Contact = () => {
     ).then(() => {
       setIsLoading(false);
 
-      setForm({ name: '', email: '', message: '' });
+      setTimeout(() => {
+        setCurrentAnimation('idle') // after sending configurations / fox stop running after 3 sec and clear form after 3 sec.
+        setForm({ name: '', email: '', message: '' })
+      }, [3000]);
+
     }).catch((error) => {
       setIsLoading(false);
       setCurrentAnimation('idle');
