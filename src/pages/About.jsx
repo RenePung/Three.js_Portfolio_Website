@@ -1,6 +1,7 @@
 import { VerticalTimeline, VerticalTimelineElement }  from 'react-vertical-timeline-component';
 import 'react-vertical-timeline-component/style.min.css';
 import { skills, experiences } from '../constants';
+import CTA from '../components/CTA.JSX';
 
 const About = () => {
   return (
@@ -16,7 +17,7 @@ const About = () => {
 
         <div className="mt-16 flex flex-wrap gap-12">
           {skills.map((skill) => (
-            <div className="block-container w-20 h-20">
+            <div className="block-container w-20 h-20" key={skill.name}>
               <div className="btn-black rounded-xl"/> 
               <div className="btn-front rounded-xl flex justify-center items-center border shadow-xl hover:border-sky-500">
                 <img 
@@ -82,6 +83,10 @@ const About = () => {
           </VerticalTimeline>
         </div>
       </div>
+
+      <hr className="border-slate-300" />
+
+      <CTA />
     </section>
   )
 }
