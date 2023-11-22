@@ -3,6 +3,8 @@ import emailjs from '@emailjs/browser';
 import { Canvas } from '@react-three/fiber';
 import Fox from '../models/Fox';
 import Loader from '../components/Loader';
+import useAlert from '../hooks/useAlert';
+import Alert from '../components/Alert';
 // IMPORTS --------------------------------------------------------------------------------------------
 
 const Contact = () => {
@@ -10,6 +12,7 @@ const Contact = () => {
   const [form, setForm] = useState({ name: '', email: '', message: '' });
   const [isLoading, setIsLoading] = useState(false);
   const [currentAnimation, setCurrentAnimation] = useState('idle');
+  const { alert, showAlert, hideAlert } = useAlert(); // useAlert.js - custom hook
 
   // HANDLECHANGE -------------------------------------------------------------------------------------
   const handleChange = (e) => {
@@ -35,8 +38,10 @@ const Contact = () => {
       import.meta.env.VITE_APP_EMAILJS_PUBLIC_KEY
     ).then(() => {
       setIsLoading(false);
+      showAlert({ show: true, text: 'Message Sent Successfully!', type: 'success' })
 
       setTimeout(() => {
+        hideAlert();
         setCurrentAnimation('idle') // after sending configurations / fox stop running after 3 sec and clear form after 3 sec.
         setForm({ name: '', email: '', message: '' })
       }, [3000]);
@@ -45,6 +50,7 @@ const Contact = () => {
       setIsLoading(false);
       setCurrentAnimation('idle');
       console.log(error);
+      showAlert({ show: true, text: 'This Message Was Taken Down By FBI! Try Again!', type: 'danger' })
     })
   };
   // HANDLEFOCUS FOX --------------------------------------------------------------------------------------
@@ -54,6 +60,8 @@ const Contact = () => {
   // RETURN -------------------------------------------------------------------------------------------
   return (
     <section className="relative flex lg:flex-row flex-col max-container bg-gradient-to-r from-rose-100 to-teal-100">
+      {alert.show && <Alert {...alert} />}
+      <Alert {...alert} />
       <div className="flex-1 min-w-[50%] flex flex-col">
         <h1 className="head-text">Get in touch 💬</h1>
 
