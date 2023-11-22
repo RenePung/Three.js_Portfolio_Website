@@ -1,11 +1,15 @@
-import React, { useRef, useState } from 'react'
+import React, { Suspense, useRef, useState } from 'react'
 import emailjs from '@emailjs/browser';
+import { Canvas } from '@react-three/fiber';
+import Fox from '../models/Fox';
+import Loader from '../components/Loader';
 // IMPORTS --------------------------------------------------------------------------------------------
 
 const Contact = () => {
   const formRef = useRef(null);
-  const [form, setForm] = useState({ name: '', email: '', message: '' })
+  const [form, setForm] = useState({ name: '', email: '', message: '' });
   const [isLoading, setIsLoading] = useState(false);
+  const [currentAnimation, setCurrentAnimation] = useState('idle');
 
   // HANDLECHANGE -------------------------------------------------------------------------------------
   const handleChange = (e) => {
@@ -15,8 +19,9 @@ const Contact = () => {
   const handleSubmit = (e) => {
     e.preventDefault(); // prevent page reload
     setIsLoading(true);
+    setCurrentAnimation('hit');
 
-    console.log(import.meta.env.VITE_APP_EMAILJS_SERVICE_ID)
+    console.log(import.meta.env.VITE_APP_EMAILJS_SERVICE_ID) // console log email service emailjs
     emailjs.send(
       import.meta.env.VITE_APP_EMAILJS_SERVICE_ID,
       import.meta.env.VITE_APP_EMAILJS_TEMPLATE_ID,
@@ -34,13 +39,14 @@ const Contact = () => {
       setForm({ name: '', email: '', message: '' });
     }).catch((error) => {
       setIsLoading(false);
+      setCurrentAnimation('idle');
       console.log(error);
     })
   };
-  // HANDLEFOCUS --------------------------------------------------------------------------------------
-  const handleFocus = () => {};
-  // HANDLEBLUR ---------------------------------------------------------------------------------------
-  const handleBlur = () => {};
+  // HANDLEFOCUS FOX --------------------------------------------------------------------------------------
+  const handleFocus = () => setCurrentAnimation('walk');
+  // HANDLEBLUR FOX ---------------------------------------------------------------------------------------
+  const handleBlur = () => setCurrentAnimation('idle');
   // RETURN -------------------------------------------------------------------------------------------
   return (
     <section className="relative flex lg:flex-row flex-col max-container bg-gradient-to-r from-rose-100 to-teal-100">
@@ -103,6 +109,28 @@ const Contact = () => {
             {isLoading ? 'Sending...' : 'Send Message'}
           </button>
         </form>
+      </div>
+      {/*FOX 3D ANIMATION---------------------------------------------------------------------*/}
+      <div className="lg:w-1/2 w-full lg:h-auto md:h-[550px] h-[350px]">
+        <Canvas
+        camera={{
+          position: [0, 0, 5],
+          fov: 75,
+          near: 0.1,
+          far: 1000
+        }}
+        >
+          <directionalLight intensity={2.5} position={[0, 0, 1]} />
+          <ambientLight intensity={0.4} />
+          <Suspense fallback={<Loader />}>
+            <Fox
+            currentAnimation={currentAnimation}
+             position={[0.5, 0.35, 0]}
+             rotation={[12.6, -0.6, 0]}
+             scale={[0.6, 0.6, 0.6]}
+            />
+          </Suspense>
+        </Canvas>
       </div>
     </section>
   )
