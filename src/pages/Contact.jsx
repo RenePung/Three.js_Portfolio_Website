@@ -38,7 +38,7 @@ const Contact = () => {
       import.meta.env.VITE_APP_EMAILJS_PUBLIC_KEY
     ).then(() => {
       setIsLoading(false);
-      showAlert({ show: true, text: 'Message Sent Successfully!', type: 'success' })
+      showAlert({ show: true, text: 'Message Sent Successfully! ✔️', type: 'success' })
 
       setTimeout(() => {
         hideAlert();
@@ -50,7 +50,7 @@ const Contact = () => {
       setIsLoading(false);
       setCurrentAnimation('idle');
       console.log(error);
-      showAlert({ show: true, text: 'This Message Was Taken Down By FBI! Try Again!', type: 'danger' })
+      showAlert({ show: true, text: 'This Message Was Taken Down By FBI! Try Again! ❌', type: 'danger' })
     })
   };
   // HANDLEFOCUS FOX --------------------------------------------------------------------------------------
